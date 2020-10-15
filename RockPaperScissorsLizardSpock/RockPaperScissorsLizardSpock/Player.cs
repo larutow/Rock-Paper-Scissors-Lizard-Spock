@@ -6,25 +6,22 @@ using System.Threading.Tasks;
 
 namespace RockPaperScissorsLizardSpock
 {
-    class Player
+    abstract class Player
     {
         public Gesture gesture;
         //public string name;
         public int score;
+        public List<Gesture> availableGestures;
 
         public Player()
         {
-
+            availableGestures = new List<Gesture> { new Gesture("rock"), new Gesture("paper"), new Gesture("scissors"), new Gesture("lizard"), new Gesture("spock")};
         }
 
-        public virtual void ChooseGesture(List<Gesture> gestures)
+        public virtual Gesture ChooseGesture()
         {
             // choose gesture codeblock
-        }
-
-        public virtual void ChooseGesture(List<Gesture> gestures, int indexOfChosenGesture)
-        {
-            // choose gesture codeblock
+            return null;
         }
 
         public void ScoreIncrease()
