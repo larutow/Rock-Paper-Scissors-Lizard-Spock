@@ -8,7 +8,7 @@ namespace RockPaperScissorsLizardSpock
 {
     abstract class Player
     {
-        public Gesture gesture;
+        public Gesture chosenGesture;
         //public string name;
         public int score;
         public List<Gesture> availableGestures;
@@ -16,6 +16,7 @@ namespace RockPaperScissorsLizardSpock
         public Player()
         {
             availableGestures = new List<Gesture> { new Gesture("rock"), new Gesture("paper"), new Gesture("scissors"), new Gesture("lizard"), new Gesture("spock")};
+            chosenGesture = new Gesture("NULL");
         }
 
         public virtual Gesture ChooseGesture()

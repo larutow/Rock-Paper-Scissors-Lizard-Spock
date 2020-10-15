@@ -41,13 +41,71 @@ namespace RockPaperScissorsLizardSpock
 
         public void CompareGestures()
         {
-
-
+            if(p1.chosenGesture == p2.chosenGesture)
+            {
+                Console.WriteLine("Draw, no points scored");
+                return;
+            }
+            if (p1.chosenGesture.gestureType == "rock")
+            {
+                if (p2.chosenGesture.gestureType == "scissors" || p2.chosenGesture.gestureType == "lizzard")
+                {
+                    UpdateScore(p1);
+                }
+                else
+                {
+                    UpdateScore(p2);
+                }
+            }
+            else if (p1.chosenGesture.gestureType == "paper")
+            {
+                if (p2.chosenGesture.gestureType == "rock" || p2.chosenGesture.gestureType == "spock")
+                {
+                    UpdateScore(p1);
+                }
+                else
+                {
+                    UpdateScore(p2);
+                }
+            }
+            else if (p1.chosenGesture.gestureType == "scissors")
+            {
+                if (p2.chosenGesture.gestureType == "lizzard" || p2.chosenGesture.gestureType == "paper")
+                {
+                    UpdateScore(p1);
+                }
+                else
+                {
+                    UpdateScore(p2);
+                }
+            }
+            else if (p1.chosenGesture.gestureType == "lizzard")
+            {
+                if (p2.chosenGesture.gestureType == "spock" || p2.chosenGesture.gestureType == "paper")
+                {
+                    UpdateScore(p1);
+                }
+                else
+                {
+                    UpdateScore(p2);
+                }
+            }
+            else if (p1.chosenGesture.gestureType == "spock")
+            {
+                if (p2.chosenGesture.gestureType == "scissors" || p2.chosenGesture.gestureType == "rock")
+                {
+                    UpdateScore(p1);
+                }
+                else
+                {
+                    UpdateScore(p2);
+                }
+            }
         }
 
         public void UpdateScore(Player player)
         {
-
+            player.score++;
         }
         public void StartGame()
         {

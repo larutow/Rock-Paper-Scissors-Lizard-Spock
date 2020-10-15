@@ -8,11 +8,11 @@ namespace RockPaperScissorsLizardSpock
 {
     class Gesture
     {
-        string gestureType;
+        public string gestureType;
 
         public Gesture(String gestureType)
         {
-            this.gestureType = gestureType;
+           this.gestureType = gestureType;
         }
     }
 }
