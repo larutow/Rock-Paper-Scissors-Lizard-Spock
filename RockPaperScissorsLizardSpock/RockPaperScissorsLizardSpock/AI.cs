@@ -16,7 +16,7 @@ namespace RockPaperScissorsLizardSpock
         }
         public override Gesture ChooseGesture()
         {
-
+            chosenGesture = availableGestures[0];
             return null;
         }
     }

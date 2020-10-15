@@ -105,6 +105,7 @@ namespace RockPaperScissorsLizardSpock
 
         public void UpdateScore(Player player)
         {
+            Console.WriteLine($"{player} won");
             player.score++;
         }
         public void StartGame()
