@@ -24,7 +24,7 @@ namespace RockPaperScissorsLizardSpock
             rng = new Random();
             menuOptions = new List<string>{"1P Game", "2P Game", "Game Setup", "Rules / Help", "Exit Game" };
             mode = "RPSLS";
-            gameOptions = new List<string>{"Toggle P1AI", "RPS Classic Mode"};
+            gameOptions = new List<string>{"Toggle P1AI", "Toggle RPS Classic Mode"};
             p1AI = false;
         }
 
@@ -55,13 +55,13 @@ namespace RockPaperScissorsLizardSpock
 
         public void EndGameOptions()
         {
+            p1.score = 0;
+            p2.score = 0;
             Console.WriteLine("Play again- enter 'y'? If 'n' or any other character: return to menu");
             char userInput = EndGameInput();
             switch (userInput)
             {
                 case 'y':
-                    p1.score = 0;
-                    p2.score = 0;
                     PlayGame();
                     break;
                 case 'n':
@@ -179,7 +179,7 @@ namespace RockPaperScissorsLizardSpock
         }
         public void StartGame()
         {
-            Console.WriteLine("Welcome P1 to Rock - Paper - Lizard - Spock. Enter any key to continue.");
+            Console.WriteLine("Welcome to Rock - Paper - Lizard - Spock. Enter any key to continue.");
             Console.ReadLine();
             MainMenu();
         }
@@ -210,7 +210,7 @@ namespace RockPaperScissorsLizardSpock
             Console.WriteLine("spock > rock & scissors");
             Console.WriteLine("any gesture = itself (draw)\n");
 
-            Console.WriteLine("Games are played in a \"bestof\" fashion - default behavior is best of 3, but you can configure the 'best-of' count before choosing a mode and playing a game\n");
+            Console.WriteLine("Games are played in a \"bestof\" fashion\n");
 
             Console.WriteLine("Press anykey to return to the main menu");
             Console.ReadLine();
@@ -290,6 +290,10 @@ namespace RockPaperScissorsLizardSpock
                     {
                         p1 = new AI("P1", rng);
                     }
+                    else
+                    {
+                        p1 = new ClassicAI("P1", rng);
+                    }
 
                 }
                 else
@@ -328,7 +332,6 @@ namespace RockPaperScissorsLizardSpock
                     {
                         p2 = new ClassicHuman("P2");
                     }
-
                 }
             }
 
