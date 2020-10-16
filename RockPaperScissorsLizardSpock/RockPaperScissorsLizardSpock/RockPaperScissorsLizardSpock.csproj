@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI.cs" />
+    <Compile Include="ClassicAI.cs" />
+    <Compile Include="ClassicHuman.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Gesture.cs" />
     <Compile Include="Human.cs" />

@@ -265,11 +265,6 @@ namespace RockPaperScissorsLizardSpock
             }
         }
 
-        public void ShowGameOptions()
-        {
-
-        }
-
         public int MenuChoice(List<String> menuOptions)
         {
             int menuChoice;
@@ -284,6 +279,60 @@ namespace RockPaperScissorsLizardSpock
             return menuChoice;
         }
 
+        public void PlayerSpawner(string name, Random rng, string mode, bool p1AI, int menuChoice)
+        {
+
+            if(name == "P1")
+            {
+                if (p1AI)
+                {
+                    if (mode == "RPSLS")
+                    {
+                        p1 = new AI("P1", rng);
+                    }
+
+                }
+                else
+                {
+                    if (mode == "RPSLS")
+                    {
+                        p1 = new Human("P1");
+                    }
+                    else
+                    {
+                        p1 = new ClassicHuman("P1");
+                    }
+                }
+            }
+
+            if (name == "P2")
+            {
+                if (mode == "RPSLS")
+                {
+                    if (menuChoice == 1)
+                    {
+                        p2 = new AI("P2", rng);
+                    }
+                    else if (menuChoice == 2)
+                    {
+                        p2 = new Human("P2");
+                    }
+                }
+                else
+                {
+                    if (menuChoice == 1)
+                    {
+                        p2 = new ClassicAI("P2", rng);
+                    }
+                    else if (menuChoice == 2)
+                    {
+                        p2 = new ClassicHuman("P2");
+                    }
+
+                }
+            }
+
+        }
         public void MainMenu()
         {
             int menuChoice;
@@ -293,22 +342,14 @@ namespace RockPaperScissorsLizardSpock
             switch (menuChoice)
             {
                 case 1:
-                    if (p1AI)
-                    {
-                        p1 = new AI("P1", rng);
-                    }
-                    else
-                    {
-                        p1 = new Human("P1");
-                    }
-                    
-                    p2 = new AI("P2",rng);
+                    PlayerSpawner("P1", rng, mode, p1AI, menuChoice);
+                    PlayerSpawner("P2",rng, mode, p1AI, menuChoice);
                     Console.Clear();
                     PlayGame();
                     break;
                 case 2:
-                    p1 = new Human("P1");
-                    p2 = new Human("P2");
+                    PlayerSpawner("P1", rng, mode, p1AI, menuChoice);
+                    PlayerSpawner("P2", rng, mode, p1AI, menuChoice);
                     Console.Clear();
                     PlayGame();
                     break;
