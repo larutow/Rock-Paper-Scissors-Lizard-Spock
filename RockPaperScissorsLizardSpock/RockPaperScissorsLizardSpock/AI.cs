@@ -9,14 +9,16 @@ namespace RockPaperScissorsLizardSpock
 {
     class AI : Player
     {
-        Random rng;    
-        public AI(Random rng)
+        public Random rng;    
+        public AI(string name, Random rng)
+            :base(name)
         {
-            rng = this.rng;
+            this.rng = rng;
         }
         public override Gesture ChooseGesture()
         {
-            chosenGesture = availableGestures[0];
+            int gestureChoice = rng.Next(0, availableGestures.Count);
+            chosenGesture = availableGestures[gestureChoice];
             return null;
         }
     }

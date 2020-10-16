@@ -8,9 +8,14 @@ namespace RockPaperScissorsLizardSpock
 {
     class Human : Player
     {
+        public Human(string name)
+            :base(name)
+        {
+            this.name = name;
+        }
         public override Gesture ChooseGesture()
         {
-            Console.WriteLine("Enter Gesture Type: ");
+            Console.WriteLine($"{name} - Enter Gesture Type: ");
             foreach (Gesture gesture in availableGestures)
             {
                 Console.Write($"{gesture.gestureType} ");

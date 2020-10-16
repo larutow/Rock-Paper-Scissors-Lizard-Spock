@@ -14,26 +14,37 @@ namespace RockPaperScissorsLizardSpock
         public Player p2;
         public Random rng;
         public int bestOf;
+        string mode;
+        public List<string> gameOptions;
+        public bool p1AI;
 
         public Game()
         {
             bestOf = 3;
             rng = new Random();
-            menuOptions = new List<string>{"1P Game", "2P Game", "Rules / Help", "Exit Game"};
+            menuOptions = new List<string>{"1P Game", "2P Game", "Game Setup", "Rules / Help", "Exit Game" };
+            mode = "RPSLS";
+            gameOptions = new List<string>{"Toggle P1AI", "RPS Classic Mode"};
+            p1AI = false;
         }
 
         public void PlayGame()
         {
             do
             {
+                Console.Clear();
                 p1.ChooseGesture();
+                Console.Clear();
                 p2.ChooseGesture();
+                Console.Clear();
+                ShowGestures();
                 CompareGestures();
-
+                ShowScores();
             }while (p1.score < (bestOf / 2) + 1 && p2.score < (bestOf / 2) +1);
-            Console.WriteLine($"P1 score: {p1.score}");
-            Console.WriteLine($"P2 score: {p2.score}");
-            Console.ReadLine();
+
+            AnnounceVictor();
+            EndGameOptions();
+            
             //p1 choose
             //p2 choose
             //compare p1 choice & p2 choice (return winner)
@@ -42,8 +53,63 @@ namespace RockPaperScissorsLizardSpock
 
         }
 
-        public void CompareGestures()
+        public void EndGameOptions()
         {
+            Console.WriteLine("Play again- enter 'y'? If 'n' or any other character: return to menu");
+            char userInput = EndGameInput();
+            switch (userInput)
+            {
+                case 'y':
+                    p1.score = 0;
+                    p2.score = 0;
+                    PlayGame();
+                    break;
+                case 'n':
+                    Console.Clear();
+                    MainMenu();
+                    break;
+            }
+        }
+
+        public char EndGameInput()
+        {
+            char userInput = ' ';
+            bool tryChar = false;
+            do
+            {
+                tryChar = char.TryParse(Console.ReadLine(), out userInput);
+                if (tryChar == false){
+                    Console.WriteLine("Invalid Input - please re-enter");
+                }
+            } while (tryChar == false);
+            return userInput;
+        }
+        public void AnnounceVictor()
+        {
+            if (p1.score > p2.score)
+            {
+                Console.WriteLine($"Game Over - P1 Wins: {p1.score} - {p2.score}");
+            }
+            else
+            {
+                Console.WriteLine($"Game Over - P2 Wins: {p2.score} - {p1.score}");
+            }
+        }
+
+        public void ShowScores()
+        {
+            Console.WriteLine($"Scoreboard:\n{p1.name} - {p2.name}\n{p1.score} - {p2.score}\nEnter any key to continue.");
+            Console.ReadLine();
+        }
+        
+        public void ShowGestures()
+        {
+            Console.WriteLine("Press any key to show & compare both players selected gestures");
+            Console.ReadLine();
+            Console.WriteLine($"{p1.name} chose:{p1.chosenGesture.gestureType}\n{p2.name} chose:{p2.chosenGesture.gestureType}\n");
+        }
+        public void CompareGestures()
+        { 
             if(p1.chosenGesture.gestureType == p2.chosenGesture.gestureType)
             {
                 Console.WriteLine("Draw, no points scored");
@@ -51,7 +117,7 @@ namespace RockPaperScissorsLizardSpock
             }
             if (p1.chosenGesture.gestureType == "rock")
             {
-                if (p2.chosenGesture.gestureType == "scissors" || p2.chosenGesture.gestureType == "lizzard")
+                if (p2.chosenGesture.gestureType == "scissors" || p2.chosenGesture.gestureType == "lizard")
                 {
                     UpdateScore(p1);
                 }
@@ -73,7 +139,7 @@ namespace RockPaperScissorsLizardSpock
             }
             else if (p1.chosenGesture.gestureType == "scissors")
             {
-                if (p2.chosenGesture.gestureType == "lizzard" || p2.chosenGesture.gestureType == "paper")
+                if (p2.chosenGesture.gestureType == "lizard" || p2.chosenGesture.gestureType == "paper")
                 {
                     UpdateScore(p1);
                 }
@@ -82,7 +148,7 @@ namespace RockPaperScissorsLizardSpock
                     UpdateScore(p2);
                 }
             }
-            else if (p1.chosenGesture.gestureType == "lizzard")
+            else if (p1.chosenGesture.gestureType == "lizard")
             {
                 if (p2.chosenGesture.gestureType == "spock" || p2.chosenGesture.gestureType == "paper")
                 {
@@ -108,7 +174,7 @@ namespace RockPaperScissorsLizardSpock
 
         public void UpdateScore(Player player)
         {
-            Console.WriteLine($"{player} won the round");
+            Console.WriteLine($"{player.name} won the round");
             player.score++;
         }
         public void StartGame()
@@ -118,18 +184,38 @@ namespace RockPaperScissorsLizardSpock
             MainMenu();
         }
 
-        public void DisplayMainMenu()
+        public void DisplayMenu(List<String> menuoptions)
         {
-            Console.WriteLine("Main Menu - Choose 1P, 2P Mode, or Quit by entering corresponding menu number");
-            for (int i = 0; i < menuOptions.Count; i++)
+            Console.WriteLine("Ententer corresponding menu number");
+            for (int i = 0; i < menuoptions.Count; i++)
             {
-                Console.WriteLine($"{i + 1}) {menuOptions[i]}");
+                Console.WriteLine($"{i + 1}) {menuoptions[i]}");
             }
         }
 
         public void DisplayRules()
         {
+        
+            Console.WriteLine($"Rock Paper Scissors Lizard Spock is a gesture 'war' game where 2 competing players choose their gestures and based upon advantage a winner & loser or draw is determined.\n");
+            
+            Console.WriteLine($"This game has two primary modes:");
+            Console.WriteLine($"1) 1P Mode - You as a human player will play against an AI who will choose their gesture at random");
+            Console.WriteLine($"2) 2P Mode - You as a human player will play against another human, taking turns to pick your gestures\n");
+            
+            Console.WriteLine("The win conditions for each gesture is as follows:");
+            Console.WriteLine("rock > scissors & lizard");
+            Console.WriteLine("paper > rock & spock");
+            Console.WriteLine("scissors > paper & lizard");
+            Console.WriteLine("lizard > paper & spock");
+            Console.WriteLine("spock > rock & scissors");
+            Console.WriteLine("any gesture = itself (draw)\n");
 
+            Console.WriteLine("Games are played in a \"bestof\" fashion - default behavior is best of 3, but you can configure the 'best-of' count before choosing a mode and playing a game\n");
+
+            Console.WriteLine("Press anykey to return to the main menu");
+            Console.ReadLine();
+            Console.Clear();
+            MainMenu();
         }
 
         public int ChooseMenuOption()
@@ -147,10 +233,46 @@ namespace RockPaperScissorsLizardSpock
             return menuChoice;
         }
 
-        public void MainMenu()
+        public void GameOptions(int menuChoice)
+        {
+            //enable ai mode
+            //enable rps classic
+
+            switch (menuChoice)
+            {
+                case 1:
+                    p1AI = !p1AI;
+                    Console.WriteLine($"P1 is AI: {p1AI} - enter any key to continue");
+                    Console.ReadLine();
+                    MainMenu();
+                    break;
+                case 2:
+                    if (mode == "RPSLS")
+                    {
+                        mode = "RPS";
+                        Console.WriteLine("Classic mode (RPS) enabled - enter any key to continue");
+                        Console.ReadLine();
+                        MainMenu();
+                    }
+                    else
+                    {
+                        mode = "RPSLS";
+                        Console.WriteLine("Default mode (RPSLS) enabled - enter any key to continue");
+                        Console.ReadLine();
+                        MainMenu();
+                    }
+                    break;
+            }
+        }
+
+        public void ShowGameOptions()
+        {
+
+        }
+
+        public int MenuChoice(List<String> menuOptions)
         {
             int menuChoice;
-            DisplayMainMenu();
             do
             {
                 menuChoice = ChooseMenuOption();
@@ -159,25 +281,48 @@ namespace RockPaperScissorsLizardSpock
                     Console.WriteLine($"Menu Option Out of Range (Please enter an int between 1 and {menuOptions.Count})");
                 }
             } while (menuChoice < 1 || menuChoice > menuOptions.Count);
-            
+            return menuChoice;
+        }
+
+        public void MainMenu()
+        {
+            int menuChoice;
+            int gameChoice;
+            DisplayMenu(menuOptions);
+            menuChoice = MenuChoice(menuOptions);
             switch (menuChoice)
             {
                 case 1:
-                    p1 = new Human();
-                    p2 = new AI(rng);
+                    if (p1AI)
+                    {
+                        p1 = new AI("P1", rng);
+                    }
+                    else
+                    {
+                        p1 = new Human("P1");
+                    }
+                    
+                    p2 = new AI("P2",rng);
+                    Console.Clear();
                     PlayGame();
                     break;
                 case 2:
-                    p1 = new Human();
-                    p2 = new Human();
+                    p1 = new Human("P1");
+                    p2 = new Human("P2");
+                    Console.Clear();
                     PlayGame();
                     break;
                 case 3:
-                    DisplayRules();
+                    Console.Clear();
+                    DisplayMenu(gameOptions);
+                    gameChoice = MenuChoice(gameOptions);
+                    GameOptions(gameChoice);
                     break;
                 case 4:
-                    Console.WriteLine("Thanks for playing. Enter any key to exit");
-                    Console.ReadLine();
+                    Console.Clear();
+                    DisplayRules();
+                    break;
+                case 5:
                     break;
             }
         }
