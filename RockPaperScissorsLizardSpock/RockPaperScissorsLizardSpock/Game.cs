@@ -30,7 +30,10 @@ namespace RockPaperScissorsLizardSpock
                 p2.ChooseGesture();
                 CompareGestures();
 
-            }while (p1.score < (bestOf / 2) + 1 || p2.score < (bestOf / 2) +1);
+            }while (p1.score < (bestOf / 2) + 1 && p2.score < (bestOf / 2) +1);
+            Console.WriteLine($"P1 score: {p1.score}");
+            Console.WriteLine($"P2 score: {p2.score}");
+            Console.ReadLine();
             //p1 choose
             //p2 choose
             //compare p1 choice & p2 choice (return winner)
@@ -41,7 +44,7 @@ namespace RockPaperScissorsLizardSpock
 
         public void CompareGestures()
         {
-            if(p1.chosenGesture == p2.chosenGesture)
+            if(p1.chosenGesture.gestureType == p2.chosenGesture.gestureType)
             {
                 Console.WriteLine("Draw, no points scored");
                 return;
@@ -105,7 +108,7 @@ namespace RockPaperScissorsLizardSpock
 
         public void UpdateScore(Player player)
         {
-            Console.WriteLine($"{player} won");
+            Console.WriteLine($"{player} won the round");
             player.score++;
         }
         public void StartGame()

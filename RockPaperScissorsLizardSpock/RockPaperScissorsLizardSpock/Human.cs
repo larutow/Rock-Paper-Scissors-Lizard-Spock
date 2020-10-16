@@ -36,7 +36,10 @@ namespace RockPaperScissorsLizardSpock
                         chosenGesture = availableGestures[i];
                         break;
                     }
-                    Console.WriteLine("Invalid entry, please reenter string");
+                }
+                if (validEntry != 0)
+                {
+                    Console.WriteLine("Input did not match any of the available gestures - please reenter");
                 }
             } while (validEntry != 0);
 
