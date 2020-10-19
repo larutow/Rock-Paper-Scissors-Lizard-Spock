@@ -64,7 +64,7 @@ namespace RockPaperScissorsLizardSpock
                 case 'y':
                     PlayGame();
                     break;
-                case 'n':
+                default:
                     Console.Clear();
                     MainMenu();
                     break;
@@ -186,7 +186,7 @@ namespace RockPaperScissorsLizardSpock
 
         public void DisplayMenu(List<String> menuoptions)
         {
-            Console.WriteLine("Ententer corresponding menu number");
+            Console.WriteLine("Enter corresponding menu number");
             for (int i = 0; i < menuoptions.Count; i++)
             {
                 Console.WriteLine($"{i + 1}) {menuoptions[i]}");
@@ -210,7 +210,9 @@ namespace RockPaperScissorsLizardSpock
             Console.WriteLine("spock > rock & scissors");
             Console.WriteLine("any gesture = itself (draw)\n");
 
-            Console.WriteLine("Games are played in a \"bestof\" fashion\n");
+            Console.WriteLine("Games are played in a \"bestof\" 3 fashion\n");
+
+            Console.WriteLine("Game options include toggleable options for (1) 1P is an AI and (2) Rock Paper Scissors classic mode");
 
             Console.WriteLine("Press anykey to return to the main menu");
             Console.ReadLine();
@@ -250,17 +252,16 @@ namespace RockPaperScissorsLizardSpock
                     if (mode == "RPSLS")
                     {
                         mode = "RPS";
-                        Console.WriteLine("Classic mode (RPS) enabled - enter any key to continue");
-                        Console.ReadLine();
-                        MainMenu();
+                       
                     }
                     else
                     {
                         mode = "RPSLS";
-                        Console.WriteLine("Default mode (RPSLS) enabled - enter any key to continue");
-                        Console.ReadLine();
-                        MainMenu();
+                        
                     }
+                    Console.WriteLine($"Mode Enabled: {mode} - enter any key to continue");
+                    Console.ReadLine();
+                    MainMenu();
                     break;
             }
         }
@@ -367,6 +368,8 @@ namespace RockPaperScissorsLizardSpock
                     DisplayRules();
                     break;
                 case 5:
+                    break;
+                default:
                     break;
             }
         }
