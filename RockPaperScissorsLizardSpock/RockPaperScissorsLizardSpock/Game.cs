@@ -109,67 +109,87 @@ namespace RockPaperScissorsLizardSpock
             Console.WriteLine($"{p1.name} chose:{p1.chosenGesture.gestureType}\n{p2.name} chose:{p2.chosenGesture.gestureType}\n");
         }
         public void CompareGestures()
-        { 
+        {
+            bool p1win = false;
             if(p1.chosenGesture.gestureType == p2.chosenGesture.gestureType)
             {
                 Console.WriteLine("Draw, no points scored");
                 return;
             }
-            if (p1.chosenGesture.gestureType == "rock")
+
+            foreach(string gesture in p1.chosenGesture.defeats)
             {
-                if (p2.chosenGesture.gestureType == "scissors" || p2.chosenGesture.gestureType == "lizard")
+                if(p2.chosenGesture.gestureType == gesture)
                 {
                     UpdateScore(p1);
-                }
-                else
-                {
-                    UpdateScore(p2);
+                    p1win = true;
+                    break;
                 }
             }
-            else if (p1.chosenGesture.gestureType == "paper")
+
+            if (p1win == false)
             {
-                if (p2.chosenGesture.gestureType == "rock" || p2.chosenGesture.gestureType == "spock")
-                {
-                    UpdateScore(p1);
-                }
-                else
-                {
-                    UpdateScore(p2);
-                }
+                UpdateScore(p2);
             }
-            else if (p1.chosenGesture.gestureType == "scissors")
-            {
-                if (p2.chosenGesture.gestureType == "lizard" || p2.chosenGesture.gestureType == "paper")
-                {
-                    UpdateScore(p1);
-                }
-                else
-                {
-                    UpdateScore(p2);
-                }
-            }
-            else if (p1.chosenGesture.gestureType == "lizard")
-            {
-                if (p2.chosenGesture.gestureType == "spock" || p2.chosenGesture.gestureType == "paper")
-                {
-                    UpdateScore(p1);
-                }
-                else
-                {
-                    UpdateScore(p2);
-                }
-            }
-            else if (p1.chosenGesture.gestureType == "spock")
-            {
-                if (p2.chosenGesture.gestureType == "scissors" || p2.chosenGesture.gestureType == "rock")
-                {
-                    UpdateScore(p1);
-                }
-                else
-                {
-                    UpdateScore(p2);
-                }
-            }
+
+            
+
+            // old game logic - refactored to above based upon gesture "defeats" list
+            //if (p1.chosenGesture.gestureType == "rock")
+            //{
+            //    if (p2.chosenGesture.gestureType == "scissors" || p2.chosenGesture.gestureType == "lizard")
+            //    {
+            //        UpdateScore(p1);
+            //    }
+            //    else
+            //    {
+            //        UpdateScore(p2);
+            //    }
+            //}
+            //else if (p1.chosenGesture.gestureType == "paper")
+            //{
+            //    if (p2.chosenGesture.gestureType == "rock" || p2.chosenGesture.gestureType == "spock")
+            //    {
+            //        UpdateScore(p1);
+            //    }
+            //    else
+            //    {
+            //        UpdateScore(p2);
+            //    }
+            //}
+            //else if (p1.chosenGesture.gestureType == "scissors")
+            //{
+            //    if (p2.chosenGesture.gestureType == "lizard" || p2.chosenGesture.gestureType == "paper")
+            //    {
+            //        UpdateScore(p1);
+            //    }
+            //    else
+            //    {
+            //        UpdateScore(p2);
+            //    }
+            //}
+            //else if (p1.chosenGesture.gestureType == "lizard")
+            //{
+            //    if (p2.chosenGesture.gestureType == "spock" || p2.chosenGesture.gestureType == "paper")
+            //    {
+            //        UpdateScore(p1);
+            //    }
+            //    else
+            //    {
+            //        UpdateScore(p2);
+            //    }
+            //}
+            //else if (p1.chosenGesture.gestureType == "spock")
+            //{
+            //    if (p2.chosenGesture.gestureType == "scissors" || p2.chosenGesture.gestureType == "rock")
+            //    {
+            //        UpdateScore(p1);
+            //    }
+            //    else
+            //    {
+            //        UpdateScore(p2);
+            //    }
+            //}
         }
 
         public void UpdateScore(Player player)
